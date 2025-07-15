@@ -6,10 +6,10 @@ import CartTotal from '../components/CartTotal'
 
 function Cart() {
   
-  const {cartItems, products , currency, updateQuantity, navigate ,  } = useContext(ShopContext)
+  const {cartItems, products , currency, updateQuantity, navigate , token  } = useContext(ShopContext)
   
   const [cartData , setCartData] = useState([])
-  
+
   
   useEffect(()=>{
     const tempData = [];
@@ -72,7 +72,7 @@ function Cart() {
         <div className='w-full sm:w-[450px]'>
           <CartTotal />
           <div className='w-full text-end '>
-            <button onClick={()=>{navigate("/placeorder")}} className='bg-black text-sm text-white my-8 px-8 py-3'>PROCEED TO PAY</button>
+            <button onClick={()=>{token ?  navigate("/placeorder") : navigate('/login')}} className='bg-black text-sm text-white my-8 px-8 py-3'>PROCEED TO PAY</button>
           </div>
         </div>
         
