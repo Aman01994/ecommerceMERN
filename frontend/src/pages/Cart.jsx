@@ -3,6 +3,7 @@ import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title'
 import { assets } from '../assets/assets'
 import CartTotal from '../components/CartTotal'
+import { toast } from 'react-toastify'
 
 function Cart() {
   
@@ -33,6 +34,11 @@ function Cart() {
     
       setCartData(tempData)
   },[cartItems,products])
+
+  const requireLogin=()=>{
+    toast("🔒 Please log in to place your order.")
+    navigate('/login')
+  }
 
   return (
     <div className='border-t pt-14'>
@@ -72,7 +78,7 @@ function Cart() {
         <div className='w-full sm:w-[450px]'>
           <CartTotal />
           <div className='w-full text-end '>
-            <button onClick={()=>{token ?  navigate("/placeorder") : navigate('/login')}} className='bg-black text-sm text-white my-8 px-8 py-3'>PROCEED TO PAY</button>
+            <button onClick={()=>{token ?  navigate("/placeorder") : requireLogin()}} className='bg-black text-sm text-white my-8 px-8 py-3'>PROCEED TO PAY</button>
           </div>
         </div>
         
