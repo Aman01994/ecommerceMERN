@@ -48,8 +48,7 @@ const placeOrder = async (req,res)=>{
 const palceOrderStripe = async (req,res) => {
 
 }
-// https://www.youtube.com/watch?v=7E6um7NGmeE&t=46063s if you want the referance of the code use this youtube link
-// start from 12:46:55
+
 // Placing orders using Razorpay Method
 const placeOrderRazorpay = async (req,res) => {
     try {
