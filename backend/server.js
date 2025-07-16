@@ -12,7 +12,7 @@ const OrdersRoute = require('./routes/orderRoute');
 
 
 // Allow all origins
-const allowedOrigins = ['https://www.foreverclothes.xyz', 'https://ecommerceadminpanel-jet.vercel.app/'];
+const allowedOrigins = ['https://www.foreverclothes.xyz', 'https://ecommerceadminpanel-jet.vercel.app'];
 
 app.use(cors({
   origin: function (origin, callback) {
