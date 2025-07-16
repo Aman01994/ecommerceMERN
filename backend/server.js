@@ -12,7 +12,19 @@ const OrdersRoute = require('./routes/orderRoute');
 
 
 // Allow all origins
-app.use(cors());
+const allowedOrigins = ['https://www.foreverclothes.xyz', 'https://ecommerceadminpanel-jet.vercel.app/'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 
 Port = process.env.PORT || 4000
 
