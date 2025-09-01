@@ -10,7 +10,7 @@ const cors = require('cors');
 const { cartRoute } = require('./routes/cartRoute');
 const OrdersRoute = require('./routes/orderRoute');
 const client = require('prom-client')
-
+const responseTime = require("response-time")
 // Allow all origins
 app.use(cors());
 
@@ -41,7 +41,28 @@ app.get("/metrics",async(req,res)=>{
     const metrics = await client.register.metrics()
     res.send(metrics)
 })
+//  Custom Metrics Request & Response time 
 
+// response-time <--- this is the package you need to install 
+
+// The 'response-time' middleware measures how long each request takes to process.
+// It adds an 'X-Response-Time' header to the HTTP response (e.g., "123.4ms")
+// and can also be used to log or monitor server performance.
+
+const reqResTime = new client.Histogram({
+    name:"http_foreverClothes_req_res_time",
+    help: "This tells how much time taken by req and res",
+    labelNames: ["method","route","status_code"],
+    buckets:[0.001, 0.05, 0.1, 0.2, 0.4, 0.5, 0.8, 1, 2]
+})
+
+app.use(response-time((req,res,time)=>{
+    reqResTime.labels({
+        method :req.method,
+        route: req.url,
+        status_code: res.statusCode
+    }).observe(time / 1000);
+}))
 
 app.listen(Port,()=>{
     console.log(`This server is Running on ${Port}`)
