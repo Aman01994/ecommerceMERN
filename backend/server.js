@@ -34,7 +34,11 @@ app.get("/",(req,res)=>{
 
 const collectDefaultMetrics = client.collectDefaultMetrics;
 
-collectDefaultMetrics({register : client.register})
+// collectDefaultMetrics({register : client.register})
+if (!global._prometheusMetricsRegistered) {
+    client.collectDefaultMetrics();
+    global._prometheusMetricsRegistered = true;
+}
 
 app.get("/metrics",async(req,res)=>{
     res.setHeader("Content-Type", client.register.contentType);
