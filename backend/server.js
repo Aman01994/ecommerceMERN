@@ -9,7 +9,7 @@ const productRouter = require('./routes/productRoute');
 const cors = require('cors');
 const { cartRoute } = require('./routes/cartRoute');
 const OrdersRoute = require('./routes/orderRoute');
-
+const client = require('prom-client')
 
 // Allow all origins
 app.use(cors());
@@ -27,6 +27,19 @@ app.use("/api/cart",cartRoute)
 app.use('/api/order',OrdersRoute)
 app.get("/",(req,res)=>{
     res.status(200).send("Api Working")
+})
+
+
+// To collect the metrics 
+
+const collectDefaultMetrics = client.collectDefaultMetrics;
+
+collectDefaultMetrics({register : client.register})
+
+app.get("/metrics",async(req,res)=>{
+    res.setHeader("Content-Type", client.register.contentType);
+    const metrics = await client.register.metrics()
+    res.send(metrics)
 })
 
 
