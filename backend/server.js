@@ -53,41 +53,41 @@ app.get("/metrics",async(req,res)=>{
 // It adds an 'X-Response-Time' header to the HTTP response (e.g., "123.4ms")
 // and can also be used to log or monitor server performance.
 
-// const reqResTime = new client.Histogram({
-//     name:"http_foreverClothes_req_res_time",
-//     help: "This tells how much time taken by req and res",
-//     labelNames: ["method","route","status_code"],
-//     buckets:[0.001, 0.05, 0.1, 0.2, 0.4, 0.5, 0.8, 1, 2]
-// })
-
-// app.use(response-time((req,res,time)=>{
-//     reqResTime.labels({
-//         method :req.method,
-//         route: req.url,
-//         status_code: res.statusCode
-//     }).observe(time / 1000);
-// }))
-
 const reqResTime = new client.Histogram({
-    name: "http_foreverClothes_req_res_time",
-    help: "Duration of HTTP requests in seconds",
-    labelNames: ["method", "route", "status_code"],
-    buckets: [0.001, 0.05, 0.1, 0.2, 0.4, 0.5, 0.8, 1, 2]
-});
+    name:"http_foreverClothes_req_res_time",
+    help: "This tells how much time taken by req and res",
+    labelNames: ["method","route","status_code"],
+    buckets:[0.001, 0.05, 0.1, 0.2, 0.4, 0.5, 0.8, 1, 2]
+})
 
-app.use(responseTime((req, res, time) => {
-    // Get normalized route path to avoid high cardinality
-    // If route is not available (e.g., 404), fallback to req.path but avoid full query strings
-    const route = req.route && req.route.path 
-        ? req.baseUrl + req.route.path 
-        : req.baseUrl || req.path.split("?")[0];
-
+app.use(response-time((req,res,time)=>{
     reqResTime.labels({
-        method: req.method,
-        route: route || "unknown_route",
+        method :req.method,
+        route: req.url,
         status_code: res.statusCode
-    }).observe(time / 1000); // convert ms → s
-}));
+    }).observe(time / 1000);
+}))
+
+// const reqResTime = new client.Histogram({
+//     name: "http_foreverClothes_req_res_time",
+//     help: "Duration of HTTP requests in seconds",
+//     labelNames: ["method", "route", "status_code"],
+//     buckets: [0.001, 0.05, 0.1, 0.2, 0.4, 0.5, 0.8, 1, 2]
+// });
+
+// app.use(responseTime((req, res, time) => {
+//     // Get normalized route path to avoid high cardinality
+//     // If route is not available (e.g., 404), fallback to req.path but avoid full query strings
+//     const route = req.route && req.route.path 
+//         ? req.baseUrl + req.route.path 
+//         : req.baseUrl || req.path.split("?")[0];
+
+//     reqResTime.labels({
+//         method: req.method,
+//         route: route || "unknown_route",
+//         status_code: res.statusCode
+//     }).observe(time / 1000); // convert ms → s
+// }));
 
 app.listen(Port,()=>{
     console.log(`This server is Running on ${Port}`)
