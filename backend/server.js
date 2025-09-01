@@ -75,7 +75,14 @@ const reqResTime = new client.Histogram({
     buckets: [0.001, 0.05, 0.1, 0.2, 0.4, 0.5, 0.8, 1, 2]
 });
 
+const totalReqCount = new client.Counter({
+    name: "total_req",
+    help: "Tells total req"
+})
+
+
 app.use(responseTime((req, res, time) => {
+    totalReqCount.inc()
     // Get normalized route path to avoid high cardinality
     // If route is not available (e.g., 404), fallback to req.path but avoid full query strings
     const route = req.route && req.route.path 
