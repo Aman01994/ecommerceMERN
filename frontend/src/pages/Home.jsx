@@ -10,7 +10,7 @@ function Home() {
   return (
     <main className="bg-white text-[#2E2E2E]">
       {/* Hero Section */}
-      <section className="w-full min-h-[70vh] flex items-center justify-center bg-[#E8E8E8]">
+  <section className="w-full min-h-[70vh] flex items-center justify-center bg-transparent">
         <Hero />
       </section>
 
