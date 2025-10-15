@@ -14,22 +14,25 @@ export default function BestSeller() {
         console.log("bestProduct",bestProduct)
     },[products])
 
-  return (
-    <div className='my-10'>
-        <div className='text-center text-3xl py-8'>
-            <Title text1={"BEST"} text2={"SELLERS"} />
-            <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero dignissimos illo a minima, voluptas ipsam earum perferendis quasi eius, possimus consectetur adipisci.
-            </p>
+    return (
+        <div className="my-10">
+            <div className="text-center py-8">
+                <Title text1={"BEST"} text2={"SELLERS"} />
+                <p className="w-full max-w-xl mx-auto text-base text-[#6B6B6B] mt-2 mb-4">Our most-loved pieces, chosen by you.</p>
+            </div>
+            {/* Product Grid with accent background */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 bg-[#F7F6F3] p-4 rounded-none">
+                {bestSeller.map((item, index) => (
+                    <div
+                        key={index}
+                        className="group bg-white shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden relative"
+                    >
+                        <ProductItems id={item._id} image={item.image} name={item.name} price={item.price} />
+                        {/* Add-to-cart button overlay (optional, if not in ProductItems) */}
+                        {/* <button className="absolute bottom-3 right-3 bg-[#2E2E2E] text-white px-4 py-2 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">Add to Cart</button> */}
+                    </div>
+                ))}
+            </div>
         </div>
-
-        <div className='grid grid-cols-2 sm:grid-cols-3 ms:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
-            {
-                bestSeller.map((item, index) => (
-                    <ProductItems key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
-                ))
-            }
-        </div>
-    </div>
-  )
+    )
 }

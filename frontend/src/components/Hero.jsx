@@ -3,22 +3,31 @@ import { assets } from '../assets/assets'
 
 function Hero() {
   return (
-    <div className='flex flex-col sm:flex-row border border-gray-400'>
-        {/* hero left  */}
-        <div className='w-full sm:w-1/2 flex flex-col items-center justify-center py-10 sm:py-0'>
-                <div className='flex items-center gap-2 text-[#414141]'>
-                    <p className='w-8 md:w-11 h-[2px] bg-[#414141]'></p>
-                    <p className='font-medium test-sm md:text-base'>OUR BESTSELLERS</p>
-                </div>
-            <h1 className='prata-regular text-3xl sm:py-3 lg:text-5xl leading-relaxed'>Lastest Arrivals</h1>
-            <div className='flex items-center gap-2'>
-                <p>SHOP NOW</p>
-                <p className='w-8 sm:w-11 h-[2px] bg-[#414141]'></p>
-            </div>
-        </div>
-
-        {/* hero right  */}
-        <img className='w-full sm:w-1/2' src={assets.hero_img}  alt="" />
+    <div className="w-full flex flex-col-reverse md:flex-row items-center justify-between px-0 md:px-8 py-8 md:py-16 bg-white transition-all duration-700">
+      {/* Left: Text */}
+      <div className="flex-1 flex flex-col items-start justify-center px-6 md:px-0 fade-in-up">
+        <span className="text-[#D6C7B9] font-semibold tracking-widest text-xs md:text-sm mb-2">OUR BESTSELLERS</span>
+        <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4">Latest Arrivals</h1>
+        <button className="group flex items-center gap-2 bg-[#2E2E2E] text-white font-semibold px-8 py-3 mt-2 uppercase tracking-wide transition hover:bg-[#D6C7B9] hover:text-[#2E2E2E] focus:outline-none">
+          SHOP NOW
+          <span className="transition-transform group-hover:translate-x-1">→</span>
+        </button>
+      </div>
+      {/* Right: Hero Image */}
+      <div className="flex-1 flex items-center justify-center w-full md:w-auto fade-in-right">
+        <img
+          src={assets.hero_img2}
+          alt="Latest Fashion Hero"
+          className="w-full max-w-md md:max-w-lg object-cover transition-transform duration-500 hover:scale-105 shadow-lg"
+          style={{borderRadius:0}}
+        />
+      </div>
+      <style>{`
+        .fade-in-up { opacity: 0; transform: translateY(40px); animation: fadeInUp 1s forwards 0.2s; }
+        .fade-in-right { opacity: 0; transform: translateX(40px); animation: fadeInRight 1s forwards 0.5s; }
+        @keyframes fadeInUp { to { opacity: 1; transform: none; } }
+        @keyframes fadeInRight { to { opacity: 1; transform: none; } }
+      `}</style>
     </div>
   )
 }

@@ -94,71 +94,75 @@ function Collection() {
   }, [sortType]);
 
   return (
-    <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
+    <>
+    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t font-inter">
       {/* Filter options section */}
-      <div className='min-w-60'>
-        <p 
-          className='my-2 text-xl flex items-center cursor-pointer gap-2'
-          onClick={() => { setShowFilter(!showFilter); }}
+      <aside
+        className={`min-w-60 sm:max-w-xs transition-all duration-300 ${showFilter ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 sm:max-h-full sm:opacity-100'} sm:opacity-100 sm:max-h-full sm:rounded-lg rounded-lg shadow-sm border border-gray-300 bg-white pl-5 py-5 mt-6 sm:mt-0 sm:block ${showFilter ? '' : 'hidden sm:block'}`}
+        style={{overflow: 'hidden'}}
+      >
+        <button
+          className="my-2 text-xl flex items-center cursor-pointer gap-2 sm:hidden focus:outline-none"
+          onClick={() => setShowFilter(!showFilter)}
         >
           FILTERS
-          <img 
-            className={`h-3 sm:hidden ${showFilter ? "rotate-90" : ""}`} 
-            src={assets.dropdown_icon} 
-            alt="" 
+          <img
+            className={`h-3 transition-transform duration-300 ${showFilter ? 'rotate-90' : ''}`}
+            src={assets.dropdown_icon}
+            alt=""
           />
-        </p>
-        
+        </button>
         {/* Categories filter */}
-        <div className={`border border-gray-300 pl-5 py-5 mt-6 ${showFilter ? "" : "hidden"} sm:block`}>
-          <p className='mb-3 text-sm font-medium'>CATEGORIES</p>
-          <div className='flex flex-col gap-2 text-sm font-light text-gray-700'>
-            <p className='flex gap-2'>
-              <input className='w-3' type="checkbox" onChange={(e) => { toggleCategory(e); }} value={"Men"} /> Men
-            </p>
-            <p className='flex gap-2'>
-              <input className='w-3' type="checkbox" onChange={(e) => { toggleCategory(e); }} value={"Women"} /> Women
-            </p>
-            <p className='flex gap-2'>
-              <input className='w-3' type="checkbox" onChange={(e) => { toggleCategory(e); }} value={"Kids"} /> Kids
-            </p>
+        <div className="rounded border border-gray-300 pl-2 py-4 mt-2 mb-4 shadow-sm">
+          <p className="mb-3 text-sm font-medium">CATEGORIES</p>
+          <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
+            {['Men', 'Women', 'Kids'].map((cat) => (
+              <label key={cat} className="flex items-center gap-2 px-1 py-1 rounded hover:bg-gray-100 transition-colors cursor-pointer">
+                <input
+                  className="w-3 h-3 accent-[#C778DD] focus:ring-2 focus:ring-[#C778DD]"
+                  type="checkbox"
+                  checked={category.includes(cat)}
+                  onChange={toggleCategory}
+                  value={cat}
+                />
+                {cat}
+              </label>
+            ))}
           </div>
         </div>
-
         {/* Subcategories filter */}
-        <div className={`border border-gray-300 pl-5 py-5 mt-6 ${showFilter ? "" : "hidden"} sm:block`}>
-          <p className='mb-3 text-sm font-medium'>TYPE</p>
-          <div className='flex flex-col gap-2 text-sm font-light text-gray-700'>
-            <p className='flex gap-2'>
-              <input className='w-3' type="checkbox" value={"Topwear"} onChange={(e) => { toggleSubCategory(e); }} /> Topwear
-            </p>
-            <p className='flex gap-2'>
-              <input className='w-3' type="checkbox" value={"Bottomwear"} onChange={(e) => { toggleSubCategory(e); }} /> Bottomwear
-            </p>
-            <p className='flex gap-2'>
-              <input className='w-3' type="checkbox" value={"Winterwear"} onChange={(e) => { toggleSubCategory(e); }} /> Winterwear
-            </p>
+        <div className="rounded border border-gray-300 pl-2 py-4 mt-2 shadow-sm">
+          <p className="mb-3 text-sm font-medium">TYPE</p>
+          <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
+            {['Topwear', 'Bottomwear', 'Winterwear'].map((sub) => (
+              <label key={sub} className="flex items-center gap-2 px-1 py-1 rounded hover:bg-gray-100 transition-colors cursor-pointer">
+                <input
+                  className="w-3 h-3 accent-[#C778DD] focus:ring-2 focus:ring-[#C778DD]"
+                  type="checkbox"
+                  checked={subCategory.includes(sub)}
+                  onChange={toggleSubCategory}
+                  value={sub}
+                />
+                {sub}
+              </label>
+            ))}
           </div>
         </div>
-      </div>
+      </aside>
 
       {/* Products display section */}
-      <div className='flex-1'>
-        <div className='flex justify-between text-base sm:text-2xl mb-4'> 
-          {/* Display the title */}
+      <main className="flex-1">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-base sm:text-2xl mb-4 gap-2">
           <Title text1={"ALL"} text2={"COLLECTION"} />
-
-          {/* Sorting options */}
-          <select 
-            onChange={(e) => { setSortType(e.target.value); }} 
-            className='border-2 border-gray-300 text-sm px-2'
+          <select
+            onChange={e => setSortType(e.target.value)}
+            className="border-2 border-gray-300 text-sm px-2 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[#C778DD] transition-all duration-200 bg-white"
           >
-            <option value="relavent">Sort by: Relavent</option>
+            <option value="relavent">Sort by: Relevant</option>
             <option value="low-high">Sort by: Low to High</option>
             <option value="high-low">Sort by: High to Low</option>
           </select>
         </div>
-
         {/* Display the filtered and sorted products */}
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6'>
           {
@@ -173,8 +177,22 @@ function Collection() {
             ))
           }
         </div>
-      </div>
+      </main>
     </div>
+    <style>{`
+      .font-inter { font-family: 'Inter', 'Poppins', system-ui, sans-serif; }
+      @media (max-width: 640px) {
+        aside[style] {
+          position: absolute;
+          left: 0;
+          top: 60px;
+          width: 100vw;
+          z-index: 20;
+          background: white;
+        }
+      }
+    `}</style>
+    </>
   );
 }
 

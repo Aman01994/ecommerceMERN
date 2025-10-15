@@ -73,8 +73,13 @@ import contact_img from './contact_img.png'
 import razorpay_logo from './razorpay_logo.png'
 import stripe_logo from './stripe_logo.png'
 import cross_icon from './cross_icon.png'
+import hero_img2 from "./hero_img2.png"
+
+import forever3 from './forever3.0.png'
 
 export const assets = {
+    forever3,
+    hero_img2,
     logo,
     hero_img,
     cart_icon,
